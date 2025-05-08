@@ -14,7 +14,7 @@ if [ -f "$APK_PATH" ]; then
     echo "✅ APK berhasil diunduh: $APK_PATH"
     
     # Step 3: Buka installer
-    am start -a android.intent.action.VIEW -d "file://$APK_PATH" -t "application/vnd.android.package-archive"
+    am start -a android.intent.action.VIEW -d "file://$APK_PATH" -t "application/com.google.android.packageinstaller"
     sleep 3
     
     echo "📱 Menunggu user untuk menginstall..."
