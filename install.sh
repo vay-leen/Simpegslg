@@ -36,7 +36,6 @@ if [ -f "$APK_PATH" ]; then
         echo "✅ Aplikasi berhasil diinstall. File dihapus otomatis."
     else
         echo "⚠️ Waktu habis. Anda mungkin belum menginstall aplikasi!"
-        echo "File APK tetap tersimpan di: $APK_PATH"
         exit 1
     fi
 
