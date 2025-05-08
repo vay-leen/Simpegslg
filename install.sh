@@ -4,7 +4,7 @@
 APK_NAME="absensi.apk"
 
 # URL file APK di GitHub
-APK_URL="https://raw.githubusercontent.com/vay-leen/absensi/refs/heads/main/$APK_NAME"
+APK_URL="https://drive.google.com/uc?export=download&id=1ehCBzC7ACBmm7ib0ZhlDWwphPOya5NKu"
 
 echo "⏳ Mengunduh aplikasi..."
 curl -L -o "$APK_NAME" "$APK_URL"
