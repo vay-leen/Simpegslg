@@ -4,7 +4,7 @@
 APK_NAME="absensi.apk"
 
 # URL file APK di GitHub
-APK_URL="https://raw.githubusercontent.com/vay-leen/refs/heads/main/absensi/main/$APK_NAME"
+APK_URL="https://raw.githubusercontent.com/vay-leen/absensi/refs/heads/main/$APK_NAME"
 
 echo "⏳ Mengunduh aplikasi..."
 curl -L -o "$APK_NAME" "$APK_URL"
@@ -17,7 +17,7 @@ if [ -f "$APK_NAME" ]; then
     APK_PATH=$(pwd)/$APK_NAME
 
     am start -a android.intent.action.VIEW -d "file://$APK_PATH" -t "application/vnd.android.package-archive"
-fi
+
     if [ $? -eq 0 ]; then
         echo "✅ Instalasi berhasil."
         rm "$APK_NAME"
