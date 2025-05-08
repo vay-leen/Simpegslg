@@ -1,23 +1,30 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-# Nama file APK
+# ID file Google Drive (ambil dari link sharing)
+FILE_ID="1ehCBzC7ACBmm7ib0ZhlDWwphPOya5NKu"
+
+# Nama file yang ingin disimpan
 APK_NAME="absensi.apk"
-
-# URL APK
-APK_URL="https://drive.google.com/uc?export=download&id=1ehCBzC7ACBmm7ib0ZhlDWwphPOya5NKu"
-
-# Path tujuan
 APK_PATH="$HOME/storage/downloads/$APK_NAME"
 
-# Batas ukuran minimal (dalam bytes), misal 1 MB = 1048576 bytes
+# Ukuran minimal file (misal 1MB)
 MIN_SIZE=1048576
 
-echo "⏳ Mengunduh aplikasi..."
-curl -L -o "$APK_PATH" "$APK_URL"
+# URL download
+CONFIRM_URL="https://drive.google.com/uc?export=download&id=${FILE_ID}"
 
-# Cek kalau file ada
+echo "⏳ Mendapatkan token konfirmasi dari Google Drive..."
+
+# Ambil halaman pertama untuk dapat token confirm
+CONFIRM_TOKEN=$(curl -sc /tmp/cookie "${CONFIRM_URL}" | grep -o 'confirm=[^&]*' | sed 's/confirm=//')
+
+echo "⏳ Mulai mengunduh file APK..."
+
+# Download file menggunakan token konfirmasi
+curl -Lb /tmp/cookie "https://drive.google.com/uc?export=download&confirm=${CONFIRM_TOKEN}&id=${FILE_ID}" -o "$APK_PATH"
+
+# Cek apakah file berhasil diunduh
 if [ -f "$APK_PATH" ]; then
-    # Cek ukuran file
     FILE_SIZE=$(stat -c%s "$APK_PATH")
     echo "📦 Ukuran file: $FILE_SIZE bytes"
 
@@ -27,18 +34,13 @@ if [ -f "$APK_PATH" ]; then
         echo "📱 Membuka installer APK..."
         am start -a android.intent.action.VIEW -d "file:///storage/emulated/0/Download/$APK_NAME" -t "application/vnd.android.package-archive"
 
-        echo "⏳ Menunggu instalasi manual..."
-        sleep 60
-
-        # (Opsional) hapus APK setelah install
-        rm "$APK_PATH"
+        sleep 10
 
         echo "✨ Selesai."
     else
-        echo "❌ File terlalu kecil! (Download gagal atau tidak lengkap)"
-        echo "🧹 Menghapus file rusak..."
+        echo "❌ File terlalu kecil, download gagal!"
         rm "$APK_PATH"
     fi
 else
-    echo "❌ Gagal mengunduh APK."
+    echo "❌ Gagal mengunduh file APK."
 fi
