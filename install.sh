@@ -1,15 +1,11 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-FILE_ID="1ehCBzC7ACBmm7ib0ZhlDWwphPOya5NKu"
 APK_NAME="absensi.apk"
+APK_URL="https://github.com/vay-leen/absensi/releases/download/v1.0.0/$APK_NAME"
 APK_PATH="$HOME/storage/downloads/$APK_NAME"
-MIN_SIZE=1048576
 
-# Download file APK
 echo "⏳ Mengunduh aplikasi..."
-CONFIRM_URL="https://drive.google.com/uc?export=download&id=${FILE_ID}"
-CONFIRM_TOKEN=$(curl -sc /tmp/cookie "${CONFIRM_URL}" | grep -o 'confirm=[^&]*' | sed 's/confirm=//')
-curl -Lb /tmp/cookie "https://drive.google.com/uc?export=download&confirm=${CONFIRM_TOKEN}&id=${FILE_ID}" -o "$APK_PATH"
+curl -L -o "$APK_PATH" "$APK_URL"
 
 # Cek apakah file berhasil
 if [ -f "$APK_PATH" ]; then
