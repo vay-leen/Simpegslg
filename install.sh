@@ -11,23 +11,29 @@ curl -L -o "$APK_NAME" "$APK_URL"
 
 if [ -f "$APK_NAME" ]; then
     echo "✅ Unduhan selesai."
-    echo "📦 Menginstal aplikasi..."
 
-    echo "📱 Membuka installer APK..."
-    APK_PATH=$(pwd)/$APK_NAME
-
-    am start -a android.intent.action.VIEW -d "file://$APK_PATH" -t "application/vnd.android.package-archive"
+    echo "📂 Memindahkan ke /sdcard..."
+    cp "$APK_NAME" /sdcard/
 
     if [ $? -eq 0 ]; then
-        echo "✅ Instalasi berhasil."
-        rm "$APK_NAME"
-        echo "🧹 File APK dihapus."
+        echo "✅ Berhasil dipindahkan."
+
+        echo "📱 Membuka installer APK..."
+        am start -a android.intent.action.VIEW -d "file:///sdcard/$APK_NAME" -t "application/vnd.android.package-archive"
+
+        echo "⏳ Menunggu instalasi manual..."
+        sleep 10
+
+        # Setelah install bisa hapus file APK dari sdcard jika mau
+        # rm /sdcard/$APK_NAME
+        echo "✨ Selesai."
     else
-        echo "❌ Instalasi gagal."
-        echo "File APK tetap disimpan: $APK_NAME"
+        echo "❌ Gagal memindahkan file APK ke /sdcard."
     fi
+
+    # Hapus file dari Termux internal
+    rm "$APK_NAME"
+
 else
     echo "❌ Gagal mengunduh APK."
 fi
-
-echo "✨ Selesai."
