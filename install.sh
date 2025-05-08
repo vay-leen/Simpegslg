@@ -12,9 +12,9 @@ if [ ! -d "$HOME/storage/downloads" ]; then
     sleep 2
 fi
 
-# Download APK dengan progress bar
-echo "⏳ Mengunduh aplikasi dengan progress bar..."
-wget --show-progress -O "$APK_PATH" "$APK_URL"
+# Download APK dengan curl
+echo "⏳ Mengunduh aplikasi..."
+curl -# -L -o "$APK_PATH" "$APK_URL"
 
 # Verifikasi hasil download
 if [ -f "$APK_PATH" ]; then
