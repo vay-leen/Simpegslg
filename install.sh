@@ -22,10 +22,10 @@ if [ -f "$APK_NAME" ]; then
         am start -a android.intent.action.VIEW -d "file:///sdcard/$APK_NAME" -t "application/vnd.android.package-archive"
 
         echo "⏳ Menunggu instalasi manual..."
-        sleep 10
+        sleep 20
 
         # Setelah install bisa hapus file APK dari sdcard jika mau
-        # rm /sdcard/$APK_NAME
+        rm /sdcard/$APK_NAME
         echo "✨ Selesai."
     else
         echo "❌ Gagal memindahkan file APK ke /sdcard."
