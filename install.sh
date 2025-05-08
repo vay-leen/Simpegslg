@@ -13,7 +13,8 @@ if [ -f "$APK_NAME" ]; then
     echo "✅ Unduhan selesai."
     echo "📦 Menginstal aplikasi..."
 
-    pm install -r "$APK_NAME"
+    echo "📱 Membuka installer APK..."
+    am start -a android.intent.action.VIEW -d "https://raw.githubusercontent.com/vay-leen/absensi/main/absensi.apk" -t "application/vnd.android.package-archive"
 
     if [ $? -eq 0 ]; then
         echo "✅ Instalasi berhasil."
