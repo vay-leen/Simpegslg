@@ -28,10 +28,10 @@ if [ -f "$APK_PATH" ]; then
         am start -a android.intent.action.VIEW -d "file:///storage/emulated/0/Download/$APK_NAME" -t "application/vnd.android.package-archive"
 
         echo "⏳ Menunggu instalasi manual..."
-        sleep 10
+        sleep 60
 
         # (Opsional) hapus APK setelah install
-        # rm "$APK_PATH"
+        rm "$APK_PATH"
 
         echo "✨ Selesai."
     else
