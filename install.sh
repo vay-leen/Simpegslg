@@ -1,28 +1,28 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-# Nama file dan URL download
-APK_NAME="absensi.apk"
-APK_URL="https://github.com/vay-leen/absensi/releases/download/v1.0.0/$APK_NAME"
-APK_PATH="$HOME/storage/downloads/$APK_NAME"
+VERSION="v1.0.0"
+BASE_URL="https://github.com/vay-leen/absensi/releases/download/$VERSION"
+APK_LIST=("absensi.apk" "gps.apk")
+DOWNLOAD_DIR="$HOME/storage/downloads"
 
-# Cek akses storage
-if [ ! -d "$HOME/storage/downloads" ]; then
+if [ ! -d "$DOWNLOAD_DIR" ]; then
     echo "📂 Mengatur akses penyimpanan Termux..."
     termux-setup-storage
     sleep 2
 fi
 
-# Download APK dengan curl
-echo "⏳ Mengunduh aplikasi..."
-curl -# -L -o "$APK_PATH" "$APK_URL"
+for APK_NAME in "${APK_LIST[@]}"; do
+    APK_URL="$BASE_URL/$APK_NAME"
+    APK_PATH="$DOWNLOAD_DIR/$APK_NAME"
 
-# Verifikasi hasil download
-if [ -f "$APK_PATH" ]; then
-    echo "✅ APK berhasil diunduh ke: $APK_PATH"
-    echo "📢 Silakan instalasi manual lewat file manager."
-else
-    echo "❌ Gagal mengunduh APK."
-    exit 1
-fi
+    echo "⏳ Mengunduh $APK_NAME..."
+    curl -# -L -o "$APK_PATH" "$APK_URL"
+    
+    if [ -f "$APK_PATH" ]; then
+        echo "✅ $APK_NAME berhasil diunduh ke: $APK_PATH"
+    else
+        echo "❌ Gagal mengunduh $APK_NAME"
+    fi
+done
 
 echo "✨ Proses selesai."
